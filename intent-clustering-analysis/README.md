@@ -13,6 +13,9 @@
 | SOTA 方法调研 | [intent-methods-survey.md](./intent-methods-survey.md) | 意图分类/聚类方法演进，传统→深度学习→LLM |
 | 表示学习与聚类算法 | [intent-representation-clustering.md](./intent-representation-clustering.md) | 意图向量表示、聚类算法量化对比 |
 | RAG 系统应用 | [intent-rag-applications.md](./intent-rag-applications.md) | 意图驱动检索、多意图处理、意图路由 |
+| **深度分析报告** | [2026-03-25-deep-analysis/](./2026-03-25-deep-analysis/) | 概率模型、方法论、实验设计 |
+| **实施路径与风险评估** | [implementation-roadmap.md](./implementation-roadmap.md) | 分阶段实施计划、风险矩阵、资源规划 |
+| **外部研究验证** | [external-research-validation.md](./external-research-validation.md) | ⭐ z.ai 研究方向价值评估，确认创新性与前沿性 |
 
 ---
 

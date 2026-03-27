@@ -17,6 +17,7 @@
 | 技术选型指南 | [tech-selection-guide.md](./tech-selection-guide.md) | KG-RAG是否必要？决策框架 |
 | 权重维护设计 | [weight-maintenance-design.md](./weight-maintenance-design.md) | 语义聚类粒度权重 |
 | **动态策略架构** | [dynamic-strategy-architecture.md](./dynamic-strategy-architecture.md) | ⭐ 意图驱动动态权重，核心实现方案 |
+| **因果推理研究方向** | [research-direction-causal-reasoning.md](./research-direction-causal-reasoning.md) | ⭐ 多跳推理 + 因果链/因果推理结合研究 |
 
 ---
 
