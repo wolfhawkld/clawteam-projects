@@ -1,0 +1,57 @@
+{
+  "day": "001",
+  "topic": "Deep Learning — Attention Mechanisms",
+  "vocabulary": [
+    {
+      "word": "empirically",
+      "pronunciation": "ɪmˈpɪrɪkli",
+      "meaning": "通过实验/经验验证地（常出现在结果陈述中）",
+      "example": "We empirically demonstrate that our method outperforms the baseline by 12% on GLUE.",
+      "note": "这个词是 paper 里 'we show' 的更严谨替代，暗示结果有实验支撑"
+    },
+    {
+      "word": "substantial",
+      "pronunciation": "səbˈstænʃəl",
+      "meaning": "显著的、大幅的（比 significant 更强调量的差异）",
+      "example": "The proposed architecture yields substantial improvements in convergence speed.",
+      "note": "significant 被用烂了，substantial 更有冲击力且不涉及统计显著性"
+    },
+    {
+      "word": "discrepancy",
+      "pronunciation": "dɪˈskrepənsi",
+      "meaning": "不一致、差异（常用于 theory vs experiment 对比）",
+      "example": "We attribute this discrepancy to the finite-precision nature of our numerical solver.",
+      "note": "比 difference 更正式，暗示理论上应该一致但实测有偏差"
+    }
+  ],
+  "patterns": [
+    {
+      "pattern": "We observe that ... , suggesting that ...",
+      "usage": "陈述实验结果 + 提出因果解释，常见于 Results & Discussion",
+      "variants": [
+        "We find that ... , indicating that ...",
+        "Notably, ... , implying that ..."
+      ]
+    },
+    {
+      "pattern": "To mitigate this, we propose ...",
+      "usage": "指出问题 + 提出解决方案，开门见山，论文 'contribution' 的标准句式",
+      "variants": [
+        "To address this limitation, we introduce ...",
+        "To overcome this challenge, we develop ..."
+      ]
+    }
+  ],
+  "tips": [
+    {
+      "tip": "避免 'very/really/quite'，用更精确的副词",
+      "detail": "学术英语中，very important → crucial/essential，really large → substantial/considerable，quite good → promising/competitive",
+      "example": "❌ The model performs very well. → ✅ The model achieves competitive performance."
+    },
+    {
+      "tip": "实验部分用过去时，客观事实用现在时",
+      "detail": "We conducted experiments on... (过去时，描述你做了什么) — Attention is computed as... (现在时，公式/事实永远成立)",
+      "example": "✅ We trained on 8 GPUs. The model converges after 100k steps."
+    }
+  ]
+}

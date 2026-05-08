@@ -1,0 +1,25 @@
+{
+  "topics": [
+    "Deep Learning — Attention & Transformers",
+    "Reinforcement Learning — Policy Optimization",
+    "Information Retrieval — RAG & Search",
+    "Natural Language Processing — LLM Architectures",
+    "Computer Vision — ConvNets & ViT",
+    "Optimization — Gradient Methods & Convergence",
+    "Mathematics — Linear Algebra & Probability for ML",
+    "Mathematics — Calculus & Information Theory",
+    "Model Evaluation — Metrics & Benchmarks",
+    "Training Techniques — Regularization & Normalization",
+    "Generative Models — Diffusion & Autoregressive",
+    "Data Engineering — Preprocessing & Augmentation",
+    "ML Systems — Distributed Training & Inference",
+    "Graph Neural Networks & Geometric Deep Learning",
+    "AI Safety & Alignment",
+    "Mathematics — Statistics & Hypothesis Testing",
+    "Mathematics — Optimization Theory & Convex Analysis",
+    "Transfer Learning & Domain Adaptation",
+    "Multi-modal Learning — Vision-Language Models",
+    "Efficient ML — Quantization & Pruning"
+  ],
+  "_comment": "每日按时序轮换，可自由增删改话题"
+}
