@@ -41,7 +41,16 @@
     "decompose",
     "Hessian",
     "mutual information",
-    "partition function"
+    "partition function",
+    "calibration",
+    "ablation",
+    "bootstrap",
+    "penalize",
+    "shrinkage",
+    "sparse",
+    "denoise",
+    "manifold",
+    "anneal"
   ],
   "used_patterns": [
     "We empirically demonstrate that [method] outperforms [baseline] by [metric] on [benchmark].",
@@ -75,7 +84,16 @@
     "Under the assumption that [condition], it follows that [conclusion] — a line of reasoning that parallels the derivation of [classical result].",
     "Expanding [function] to [order] around [point] yields [approximation], from which we derive [insight] — a local analysis that nonetheless captures the essential global behavior of [system].",
     "The [objective/quantity] decomposes into [term A], which incentivizes [behavior X], and [term B], which penalizes [behavior Y] — a trade-off whose resolution determines the optimal [strategy/representation] in [domain].",
-    "By [theorem/inequality], we obtain [bound/relation], which, when combined with [condition], yields [conclusion] — a chain of inequalities that traces [phenomenon] back to its fundamental [cause/property]."
+    "By [theorem/inequality], we obtain [bound/relation], which, when combined with [condition], yields [conclusion] — a chain of inequalities that traces [phenomenon] back to its fundamental [cause/property].",
+    "The performance of [method] is assessed along [N] dimensions: [dimension A] as measured by [metric A], [dimension B] captured by [metric B], and [dimension C] quantified via [metric C] — a multi-faceted evaluation that reveals where [method] excels relative to [baseline] and where its limitations persist.",
+    "Systematically removing [component] from the full architecture — an ablation that isolates the [function] it subserves — yields a [metric] drop of [amount], confirming that [component] contributes substantially to [capability] under [condition].",
+    "The reported [metric] of [method] — [value] — is accompanied by a [confidence interval / standard deviation] of [range]; a [statistical test, e.g., paired bootstrap, McNemar] comparing [method] to [baseline] yields p = [value], [above/below] the [significance threshold] — evidence that the observed difference [is/is not] attributable to sampling variability alone.",
+    "[Regularizer] introduces a [penalty] on [quantity], thereby [effect] while preserving [property].",
+    "The dynamics of [quantity] under [regularization scheme] diverge from the unregularized setting in that [key difference].",
+    "Absent [regularization], the [model] tends to [pathological behavior], an issue that [technique] addresses by [mechanism].",
+    "[Model] iteratively refines [quantity] across [N] steps, transitioning from [initial state] toward [target state] via a sequence of [operation].",
+    "The training objective of [model] admits a [interpretation] interpretation: it maximizes a [quantity] on [target], thereby inheriting [property] from [framework].",
+    "Whereas [discriminative counterpart] directly models [conditional relation], [generative model] characterizes the [joint structure] over [variables], enabling [capability] that [discriminative counterpart] lacks."
   ],
   "used_tips": [
     "用 'convex combination' 和 'affine transformation' 替代笼统的 'weighted sum'",
@@ -107,7 +125,16 @@
     "用 \"non-trivial\" 替代 \"non-zero\" 或 \"meaningful\" 区分平凡解与实质性结果",
     "用 'recast' 替代 'reformulate' 或 'rewrite' 表达对问题或公式的重新表述",
     "区分 'constitute' 与 'comprise' 在描述组成部分时的用法差异——视角相反",
-    "用 'entail' 替代 'mean' 或 'imply' 表达逻辑必然性——比 imply 更强且更精确"
+    "用 'entail' 替代 'mean' 或 'imply' 表达逻辑必然性——比 imply 更强且更精确",
+    "区分 'statistically significant' 与 'practically meaningful' 在实验分析中的语义差别",
+    "用 'calibrate' 而非 'adjust' 或 'tune' 描述概率输出的后处理",
+    "用 'attribution' 替代 'importance' 描述特征对预测的贡献分配",
+    "用 'induce' 替代 'cause' 或 'create' 表达正则化引入结构性质",
+    "用 'trade-off' 替代 'balance' 描述偏差-方差之间的张力关系",
+    "区分 'explicit regularization' 与 'implicit regularization' 在论文写作中的语义差异",
+    "用 'annealing schedule' 替代 'gradual decrease' 描述扩散模型中的噪声衰减策略",
+    "用 'mode coverage' 与 'sample quality' 区分生成模型的两种评估维度",
+    "用 'likelihood-based' 与 'likelihood-free' 区分生成模型的训练范式类别"
   ],
   "_comment": "最近约15天内出现过的词/句式/技巧会被自动排除"
 }

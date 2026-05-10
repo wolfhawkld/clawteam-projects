@@ -1,70 +1,74 @@
 {
-  "day": "008",
-  "topic": "Mathematics — Calculus & Information Theory",
+  "day": "011",
+  "topic": "Generative Models — Diffusion & Autoregressive",
+  "date": "2026-05-10",
   "vocabulary": [
     {
-      "word": "Hessian",
-      "pronunciation": "ˈhɛʃən",
-      "meaning": "海森矩阵（多元函数的二阶偏导矩阵，在优化理论中刻画损失曲面的局部几何——正定海森对应局部极小、负定对应局部极大；在深度学习中用于二阶优化方法如 K-FAC、牛顿法，以及分析 loss landscape 的平坦性对泛化的影响）",
-      "example": "The Hessian of the training loss with respect to the network parameters encodes the local curvature of the optimization landscape: at a minimizer, positive definiteness of the Hessian — all eigenvalues strictly greater than zero — constitutes a sufficient condition for a strict local minimum, while the spectral density of the Hessian, often characterized by a bulk of near-zero eigenvalues with a few outliers, reveals that the loss surface is highly degenerate, with the vast majority of directions carrying negligible curvature. This spectral structure underpins the effectiveness of first-order optimizers: SGD traverses the landscape primarily along high-curvature directions, and the ratio of the Hessian's trace to its effective rank correlates with the generalization gap in overparameterized models, a phenomenon formalized by the flat minima hypothesis — flatter minima (those whose Hessian has smaller eigenvalues) tend to generalize better.",
-      "note": "Hessian 的核心用途跨越三个层面：(1) 收敛性分析——Hessian 的条件数（condition number = λ_max / λ_min）决定了梯度下降的收敛速度，条件数越差收敛越慢，这正是动量法/Nesterov 加速试图解决的 core issue；(2) loss landscape 可视化——通过计算 Hessian 的最大/最小特征值方向，可以可视化损失曲面在关键方向上的「山脊」与「山谷」拓扑结构；(3) 二阶优化——自然梯度法使用 Fisher Information Matrix（FIM）而非 Hessian，但 FIM 在指数族分布下等价于广义 Gauss-Newton 矩阵，与 Hessian 有深刻联系。注意 Hessian 的计算开销为 O(d²)（d 为参数量），在 LLM 规模下不可行，因此实际中使用近似：对角 Hessian（O(d)）、Kronecker 分解近似如 K-FAC（O(k²) for k=layer size）、或 Hessian-free 方法（仅计算 Hessian 向量积)。"
+      "word": "denoise",
+      "pronunciation": "diːˈnɔɪz",
+      "meaning": "去噪（从掺杂噪声的数据中恢复干净信号，扩散模型的核心操作）",
+      "example": "The diffusion model learns to denoise a corrupted input by predicting the noise component at each timestep, effectively reversing the forward perturbation process.",
+      "note": "denoise 在扩散模型论文中几乎总是及物动词。名词形式 denoising（如 denoising score matching）是标准术语。注意与 'remove noise' 的区别——denoise 强调学习式的、端到端的去噪过程。"
     },
     {
-      "word": "mutual information",
-      "pronunciation": "ˈmjuːtʃuəl ˌɪnfərˈmeɪʃən",
-      "meaning": "互信息（衡量两个随机变量共享的信息量——I(X;Y) = KL(P_XY || P_X ⊗ P_Y)，即联合分布与边缘分布乘积之间的 KL 散度；在表征学习中用于信息瓶颈理论、变分自编码器的下界构造、以及对比学习的目标函数分析）",
-      "example": "Mutual information serves as a cornerstone quantity in modern representation learning: the Information Bottleneck (IB) principle posits that optimal representations Z of input X for predicting label Y should maximize I(Z;Y) while minimizing I(Z;X) — a rate-distortion trade-off that admits a Lagrangian relaxation L = I(Z;Y) - β I(Z;X). In practice, computing the exact mutual information between high-dimensional continuous variables is intractable, so variational bounds are employed: the InfoNCE loss used in contrastive learning lower-bounds MI by discriminating between positive and negative pairs across the batch, while the variational upper bound via the Barber-Agakov estimator regularizes the representation to discard nuisance information that does not contribute to the downstream task. The chain rule of mutual information, I(X;Y,Z) = I(X;Z) + I(X;Y|Z), parallels the decomposition of total correlation and furnishes a principled framework for analyzing how information propagates through the hierarchical layers of a deep network: each layer can be interpreted as a stage that compresses irrelevant variation while preserving task-relevant signals.",
-      "note": "Mutual information 与 entropy 的关系是信息论体系的纽带：I(X;Y) = H(X) - H(X|Y) = H(Y) - H(Y|X) = H(X) + H(Y) - H(X,Y)。在连续空间中需使用 differential entropy 替代 Shannon entropy，但注意微分熵与离散熵性质不同——微分熵可以是负值，且对非线性变换不具有不变性（与离散熵的关键差异）。在 ML 论文中，MI 常出现在三个语境：(1) 对比学习——SimCLR、MoCo、CLIP 的 InfoNCE loss 被证明是 MI 的下界，最大化 batch 内的互信息等价于学习判别性表示；(2) 域适应——最大化源域与目标域特征之间的 MI 促进域对齐，最小化变体的 MI 用于域分离；(3) 注意力机制——Transformer attention weights 的熵可以解释为模型在 tokens 间分配的「信息预算」，MI 视角下这是 tokens 间信息流的定量刻画。注意 MI 的估计偏差在高维空间中严重，即使用于表征学习的 MI 下界也常被严重低估。"
+      "word": "manifold",
+      "pronunciation": "ˈmænɪfoʊld",
+      "meaning": "流形（高维空间中数据集中分布的低维结构，生成模型的目标是逼近数据流形）",
+      "example": "Generative models can be viewed as learning a mapping from a tractable latent distribution onto the data manifold, effectively parameterizing a low-dimensional surface embedded in the ambient space.",
+      "note": "manifold hypothesis 是生成模型的基础假设。常见搭配：data manifold, latent manifold, manifold structure。在论文中常说 'the model traverses the learned manifold' 或 'points on the manifold correspond to valid samples'。"
     },
     {
-      "word": "partition function",
-      "pronunciation": "pɑːrˈtɪʃən ˈfʌŋkʃən",
-      "meaning": "配分函数（统计力学中归一化所有状态的 Boltzmann 因子之和 Z = Σ exp(-E_i/kT)；在概率图模型中对应归一化常数 Z = Σ_x exp(-E(x))，确保概率分布积分为 1；在 ML 中，energy-based models 训练的 core challenge 正是估计配分函数及其梯度）",
-      "example": "The partition function of an energy-based model Z(θ) = ∫ exp(-E_θ(x)) dx constitutes the principal computational bottleneck in training EBMs: unlike autoregressive or flow-based models where the likelihood is tractable via the chain rule, the partition function integrates over all possible configurations of x and is generally intractable in high-dimensional continuous spaces. Contrastive divergence alleviates this by approximating the gradient of log Z via a short MCMC chain initialized at the data point — a technique that trades asymptotic bias for computational efficiency. Score matching sidesteps the partition function entirely by minimizing the Fisher divergence between the data distribution and the model distribution, a procedure that requires only access to the gradient of the log-density ∇_x log p(x) — the score function — and thus bypasses the normalizing constant altogether. The partition function also surfaces in Bayesian model selection: the marginal likelihood (evidence) Z = ∫ p(D|θ) p(θ) dθ plays the role of a partition function over parameter space, and its logarithm — the log-evidence — embodies Occam's razor, penalizing model complexity by integrating out parameter uncertainty.",
-      "note": "Partition function 的估计问题是无向图模型和 energy-based models 的核心挑战。三种主流策略：(1) 对比散度（CD-k）——用 k 步 MCMC 采样近似配分函数梯度，偏差随 k 增大而减小但计算成本线性增长，CD-1 是训练 RBM 的事实标准；(2) 分数匹配（score matching）——完全绕过配分函数，仅需 score ∇_x log p(x)，但 requires 模型对 x 的梯度可计算，适用于连续密度（如 Sliced Score Matching / Denoising Score Matching）；(3) 噪声对比估计（NCE）——通过学习区分真实数据与噪声样本来隐式学习配分函数，本质是将归一化常数的估计转化为辅助参数。在物理 ML 的交汇处，配分函数也是统计力学模型（Ising model、玻尔兹曼机）与概率模型之间的桥梁——RBM 的学习本质上就是配分函数不可计算条件下的参数估计问题，MCMC-based 方法在此扮演了关键角色。"
+      "word": "anneal",
+      "pronunciation": "əˈniːl",
+      "meaning": "退火（逐步降低温度/噪声强度等控制参数，使系统从随机状态平滑过渡到稳定状态）",
+      "example": "The reverse diffusion process effectively anneals a purely Gaussian sample into a structured image by progressively removing noise across a sequence of timesteps.",
+      "note": "anneal 源自冶金学，在 ML 中描述「逐步调整参数」的流程（如 simulated annealing, temperature annealing, noise annealing schedule）。注意区分动词 anneal 与名词 annealing schedule——前者描述过程，后者描述参数计划。"
     }
   ],
   "patterns": [
     {
-      "pattern": "Expanding [function] to [order] around [point] yields [approximation], from which we derive [insight] — a local analysis that nonetheless captures the essential global behavior of [system].",
-      "usage": "用泰勒展开或局部线性化分析 ML 系统的全局行为。这个句式的力量在于 nonetheless 所表达的「局部近似却揭示全局性质」这一反直觉关系——例如将神经网络在初始化附近展开到一阶得到 linearized network（NTK 视角），损失函数的全局收敛性可由该线性化模型的谱性质精确刻画；或在高斯过程（GP）中，将核函数在固定点处展开为泰勒级数可揭示 GP 的样本路径正规性。适合在理论分析部分（如 Section 3-4）使用，用于将复杂的全局现象归因于局部性质的推导。注意 order 的精确性：一阶展开（first-order expansion / linearization）与二阶展开（second-order expansion / quadratic approximation）给出的 insight 截然不同。",
+      "pattern": "[Model] iteratively refines [quantity] across [N] steps, transitioning from [initial state] toward [target state] via a sequence of [operation].",
+      "usage": "用于描述迭代式生成过程的整体流程——从初始分布出发，经过多步逐步细化的操作，收敛到目标结构。适用于扩散模型、自回归模型、以及任何自回归式或迭代式生成架构。",
       "variants": [
-        "A [order]-order Taylor expansion of [function] at [point] reveals that [insight], suggesting that the local [property] of the objective has far-reaching consequences for the global behavior of [system].",
-        "Linearizing [system] around [reference point] by retaining the first-order term yields [approximation], whose spectral properties — as we demonstrate — govern the [behavior] even far from the expansion point, a phenomenon that parallels the theory of [classical model] in [domain]."
+        "The denoising diffusion probabilistic model iteratively refines a Gaussian sample across T steps, transitioning from pure noise toward a clean data point via a sequence of learned denoising operations.",
+        "The autoregressive transformer iteratively refines the output sequence across the token index, transitioning from a start-of-sequence token toward the complete sentence via a cascade of next-token predictions.",
+        "The Langevin dynamics sampler iteratively refines the initialized point across MCMC steps, transitioning from a random initialization toward a high-likelihood region under the target density via gradient-informed perturbations."
       ]
     },
     {
-      "pattern": "The [objective/quantity] decomposes into [term A], which incentivizes [behavior X], and [term B], which penalizes [behavior Y] — a trade-off whose resolution determines the optimal [strategy/representation] in [domain].",
-      "usage": "描述信息论或机器学习目标函数中的竞争性分解结构。这个句式适合在方法推导或损失函数设计部分使用，核心是建立「竞争 → 分解 → 权衡 → 最优解」的推导链条。例如：ELBO = reconstruction accuracy + KL regularization（重建保真度与后验正则化的权衡）、信息瓶颈目标 I(Z;Y) - β I(Z;X)（预测能力与压缩效率的权衡）、或 rate-distortion 函数 R(D)（码率与失真的权衡）。注意 decomposes into 暗示的不是任意拆分而是自然的结构性分解，incentivizes/penalizes 这对动词传达了目标函数中不同项的规范力——每个项不是 passively 存在，而是 actively 驱动模型向不同方向演化。",
+      "pattern": "The training objective of [model] admits a [interpretation] interpretation: it maximizes a [quantity] on [target], thereby inheriting [property] from [framework].",
+      "usage": "用于揭示模型损失函数与某种理论框架之间的深层联系——表明训练目标可以重新理解为最大化某种下界或变分目标，从而获得该框架的理论优势。",
       "variants": [
-        "The [loss/objective] comprises two competing forces: [term A] encourages [goal X], while [term B] discourages [behavior Y]; the optimal [solution] emerges at the point where their [gradients/effects] cancel — a fixed point that characterizes the stationary state of the system.",
-        "We cast [problem] as a trade-off between [objective A] and [objective B], mediated by the hyperparameter [λ] that governs the relative contribution of each term — an instance of the classical rate-distortion dilemma that permeates information theory, representation learning, and compression."
+        "The training objective of the diffusion model admits a variational interpretation: it maximizes an evidence lower bound (ELBO) on the log-likelihood, thereby inheriting the tractable inference structure from the variational autoencoder framework.",
+        "The training objective of the autoregressive language model admits a probabilistic interpretation: it maximizes the log-likelihood of the observed sequence under the chain rule of probability, thereby inheriting the consistency guarantees of maximum likelihood estimation.",
+        "The training objective of the score-based generative model admits a denoising interpretation: it minimizes the Fisher divergence between the model score and the true data score, thereby inheriting the local consistency properties of score matching."
       ]
     },
     {
-      "pattern": "By [theorem/inequality], we obtain [bound/relation], which, when combined with [condition], yields [conclusion] — a chain of inequalities that traces [phenomenon] back to its fundamental [cause/property].",
-      "usage": "用于数学推导中的标准不等式链条，特别适合在理论保障或定理证明中使用。在信息论与概率论中最为常见：通过 Jensen 不等式推导变分下界（ELBO）、通过 Markov 不等式推导梯度裁剪的理论保证、或通过数据处理不等式（DPI）证明信息在神经网络层级中的单调递减性质。句式的节奏是「不等式 → 条件 → 结论 → 追溯」——最后的 traces ... back to ... 一段将推导结果与领域的基本性质联系起来，为读者提供认知闭合。在优化理论中，这个句式同样适用：通过 L-smoothness 和 μ-strong convexity 推导梯度下降的线性收敛率，最终追溯到假设函数的正则性（regularity）——这是各种优化算法收敛分析的通用模式。",
+      "pattern": "Whereas [discriminative counterpart] directly models [conditional relation], [generative model] characterizes the [joint structure] over [variables], enabling [capability] that [discriminative counterpart] lacks.",
+      "usage": "用于对比生成模型与判别模型的本质差异——强调生成模型对联合分布的建模能力带来的额外优势（如无条件采样、密度估计、缺失值填补等）。",
       "variants": [
-        "Applying [inequality] to [quantity] yields [bound]; invoking [condition] tightens this to [tighter bound] — a refinement that reveals the essential [mechanism] driving [phenomenon] in [regime].",
-        "Beginning from [assumption], we first [step 1], then [step 2], and finally [step 3] — a deductive trajectory that culminates in [result], thereby tracing how [factor A] and [factor B] jointly determine the [property] of [system]."
+        "Whereas a classifier directly models p(label | input), a diffusion model characterizes the joint distribution p(input, label) over data and labels, enabling controllable generation via classifier-free guidance—a capability that the purely discriminative approach lacks.",
+        "Whereas a conditional GAN directly models the conditional generator p(x | y), an autoregressive model characterizes the full joint distribution p(x) alongside any conditioning, enabling unconditional sampling and density evaluation—capabilities that the conditional-only approach lacks.",
+        "Whereas a regression model directly maps features to a continuous target via a learned function, a normalizing flow characterizes the joint density p(x, y) over features and targets, enabling uncertainty quantification and imputation of missing modalities—capabilities that the deterministic mapping lacks."
       ]
     }
   ],
   "tips": [
     {
-      "tip": "用 'recast' 替代 'reformulate' 或 'rewrite' 表达对问题或公式的重新表述",
-      "detail": "Recast (/riːˈkæst/) 在学术写作中比 reformulate 更精炼且更具画面感——它源于铸造业的「回炉重铸」意象，暗示对问题表述的根本性重塑而非表而改写。在 ML 论文中，recast 特别适合描述将一个已知问题等价变换为另一个已有成熟工具解决的问题：例如将稀疏编码 recast 为 Lasso 问题以便调用标准求解器、将对比学习 recast 为噪声对比估计（NCE）以便套用 NCE 的理论分析框架、或将图神经网络 recast 为消息传递框架以统一各类 GNN 变体。标准搭配为 recast [X] as [Y]（将 X 重新表述为 Y）或 recast [X] in the language/framework of [Z]。注意 recast 暗示的是等价变换（保持问题的解不变），而 reformulate 可以仅仅是表达形式不同而不保证等价性。在数学写作中，recast 常用于描述将某类问题归约为另一类已有分类的问题（如将 SVM 的二次规划 recast 为对偶空间的线性约束问题），这种用法在理论计算机科学中尤其常见。",
-      "example": "❌ We reformulate the constrained optimization problem as an unconstrained Lagrangian. → ✅ We recast the constrained minimization in Eq.(5) as a saddle-point search in the primal-dual space: L(x, λ) = f(x) + λᵀg(x), whose stationary points — defined by ∇_x L = 0 and ∇_λ L = 0 — coincide with the KKT points of the original problem. This recasting permits the use of gradient descent-ascent dynamics, circumventing the combinatorial complexity of directly enumerating the constraint set while preserving the exact solution structure."
+      "tip": "用 'annealing schedule' 替代 'gradual decrease' 描述扩散模型中的噪声衰减策略",
+      "detail": "在扩散模型论文中，噪声强度随时间步的变化是核心设计。'noise schedule' 或 'variance schedule' 是标准术语，但进一步使用 'annealing schedule'（退火调度）能更生动地暗示「从高噪声逐步过渡到低噪声」的物理类比。类似的还有 'temperature annealing' 用于自回归模型中的采样温度调控。",
+      "example": "Before: 'The noise level is gradually decreased over the diffusion steps from a large initial value to zero.'\nAfter: 'The noise follows an annealing schedule across the diffusion trajectory, starting from a fully perturbed state and decaying to zero variance at the final step.'"
     },
     {
-      "tip": "区分 'constitute' 与 'comprise' 在描述组成部分时的用法差异——视角相反",
-      "detail": "Constitute (/ˈkɒnstɪtjuːt/) 和 comprise (/kəmˈpraɪz/) 都描述整体与部分的关系但视角相反：constitute 是「部分构成整体」（主语是部分，宾语是整体），comprise 是「整体包含部分」（主语是整体，宾语是部分）。正确用法：\"The three attention heads constitute the multi-head attention module\" = \"The multi-head attention module comprises three attention heads\"。两者不可互换语序。在 ML 论文中，constitute 更适合描述抽象概念或数学性质的构成（如 Different activation functions constitute a key architectural choice separating early ConvNets from modern Transformers），而 comprise 更适合描述具体组件的罗列（如 The architecture comprises 12 Transformer blocks with a hidden dimension of 768）。注意常见的错误是 comprise of ——comprise 已经是及物动词，直接接宾语，不要加 of（正确的被动形式是 be composed of，如 The network is composed of 6 residual blocks）。Compose 虽与 constitute 近义但语气不如 constitute 正式：constitute 暗示该部分是整体不可或缺的支柱性元素，compose 则更中性。",
-      "example": "❌ The attention mechanism comprises of three linear projections: query, key, and value. → ✅ The query, key, and value projections constitute the core of the scaled dot-product attention mechanism: each token's representation z_i is projected into three distinct spaces via learnable matrices W_Q, W_K, W_V, and the interaction between queries and keys via the softmax operation yields a weighted combination of values — a compositional structure that admits an interpretable decomposition into retrieval (query-key matching) and aggregation (value weighting). The full multi-head variant comprises h independent heads, each operating on a projected subspace of dimension d_k = d_model / h."
+      "tip": "用 'mode coverage' 与 'sample quality' 区分生成模型的两种评估维度",
+      "detail": "mode coverage（模式覆盖）指模型是否捕获了数据分布中的所有模式/簇；sample quality（样本质量）指每个样本是否逼真。这两个维度常常呈竞争关系——提高质量可能牺牲覆盖率（如 GAN 的模式坍塌）。在论文中区分使用这两个术语能使评估讨论更精确。FID 主要衡量质量，recall / coverage score 主要衡量覆盖度。",
+      "example": "Before: 'Our model generates better images than the baseline, with a lower FID score.'\nAfter: 'Our model improves mode coverage over the baseline by 12% on the coverage metric, while maintaining competitive sample quality as measured by FID.'"
     },
     {
-      "tip": "用 'entail' 替代 'mean' 或 'imply' 表达逻辑必然性——比 imply 更强且更精确",
-      "detail": "Entail (/ɪnˈteɪl/) 在数学和理论 ML 写作中比 imply 语气更强——它暗示一个命题逻辑上必然要求另一命题成立，而非仅仅提示或关联。Imply 的强度偏弱且常用于日常语言（the results imply that...），而 entail 具有逻辑学中的精确含义：若 A entails B，则 A 为真时 B 必为真（形式化写作 A ⇒ B），且 A 假时 B 可为真或假。在概率论中，entail 常用于表达分布族之间的包含关系：Gaussian distributions entail sub-Gaussian tail bounds（高斯分布必然具有亚高斯尾部），但反之不成立——存在许多非高斯的亚高斯分布。在优化理论中：μ-strong convexity of the objective entails a unique global minimizer with linear convergence rate for gradient descent（μ-强凸性蕴含全局唯一极小值且梯度下降线性收敛）。Entail 后接 that 从句（convexity entails that any local minimum is global）或直接名词（convexity entails the globality of local minima）。注意与 imply 的微妙区分：The theory implies... 可以仅指理论暗示某结论但不必然，而 entails 排除了一切例外可能性。",
-      "example": "❌ Positive definiteness of the Hessian at a critical point means that the point is a local minimum. → ✅ Positive definiteness of the Hessian at a stationary point — all eigenvalues λ_i > 0 — entails that the point is a strict local minimum, a sufficient condition whose converse does not hold: a local minimum may exhibit a positive semi-definite Hessian with zero curvature along certain directions, as occurs in overparameterized models where the loss landscape admits entire manifolds of equivalent minimizers connected by continuous paths of zero curvature."
+      "tip": "用 'likelihood-based' 与 'likelihood-free' 区分生成模型的训练范式类别",
+      "detail": "likelihood-based 生成模型（自回归模型、归一化流、VAE、扩散模型）通过最大化数据的对数似然进行训练，可计算确切或变分下界的似然值。likelihood-free 方法（GAN、隐式模型）不显式定义似然函数，而是通过对抗训练或矩匹配来隐式匹配分布。这个二分法比 'explicit vs implicit' 更精确，因为扩散模型虽然训练时使用似然，但推理时仍然是通过迭代采样而非直接评估。",
+      "example": "Before: 'GANs and VAEs are two different types of generative models with different training methods.'\nAfter: 'GANs belong to the likelihood-free family—they train via adversarial discrimination rather than explicit density estimation—whereas diffusion models are likelihood-based, trained by optimizing a variational bound on the data log-likelihood.'"
     }
   ]
 }
